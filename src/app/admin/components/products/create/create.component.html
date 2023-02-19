@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput #txtName>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Stock</mat-label>
+            <input matInput type="number" #txtStock>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" class="example-right-align" placeholder="0" min="0" #txtPrice>
+            <span matTextPrefix>₺&nbsp;</span>
+            <span matTextSuffix>.00</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput #txtDescription></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button class="btn" color="primary"
+            (click)="create(txtName,txtStock,txtPrice,txtDescription)">Create Product</button>
+    </div>
+</div>
