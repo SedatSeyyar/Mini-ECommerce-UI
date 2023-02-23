@@ -19,17 +19,25 @@ export class CreateComponent extends BaseComponent {
     //Add 'implements OnInit' to the class.
 
   }
+
   create(name: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement, description: HTMLTextAreaElement) {
     this.showSpinner();
     const create_product: Create_Product = new Create_Product();
     create_product.name = name.value;
-    create_product.price = parseFloat(price.value);
-    create_product.stock = parseInt(stock.value);
+    create_product.price = price.value ? parseFloat(price.value) : 0;
+    create_product.stock = stock.value ? parseInt(stock.value) : 0;
     create_product.description = description.value;
     this.productService.create(create_product, () => {
       this.hideSpinner();
       this.alertify.alert("Ürün başarıyla eklenmiştir.", AlertType.Success);
-    });
+    },
+      (message: string) => {
+        this.hideSpinner();
+        this.errorCallBack(message);
+      });
   }
 
+  errorCallBack(message: string) {
+    this.alertify.alert(message, AlertType.Error);
+  }
 }
