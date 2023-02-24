@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from 'src/app/base/base.component';
+import { Create_Product } from 'src/app/contracts/create_product';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
+import { ListComponent } from './list/list.component';
 
 @Component({
   selector: 'app-products',
@@ -37,6 +39,12 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     this.hideSpinner();
+  }
+
+  @ViewChild(ListComponent) listComponent: ListComponent;
+
+  createdProductEventHandler(createdProduct: Create_Product) {
+    this.listComponent.getProducts();
   }
 
 }

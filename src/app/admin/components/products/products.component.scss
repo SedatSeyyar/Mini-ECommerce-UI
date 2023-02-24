@@ -1,7 +1,15 @@
 .product-container {
     width: 98%;
-    height: 300pt;
+    height: 95%;
     margin: 10px;
     border: 1px solid #555;
   }
-  
+  .container-sidenav{
+    height: 100%;
+    width: 30%;
+  }
+
+  .container-content{
+    height: 100%;
+    width: auto;
+  }

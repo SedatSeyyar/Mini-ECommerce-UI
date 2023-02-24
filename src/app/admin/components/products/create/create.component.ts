@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from 'src/app/base/base.component';
 import { Create_Product } from 'src/app/contracts/create_product';
@@ -12,11 +12,9 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 })
 export class CreateComponent extends BaseComponent {
 
-  constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertify: AlertifyService) { super(spinner); }
+  constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertifyService: AlertifyService) { super(spinner); }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
 
   }
 
@@ -29,7 +27,8 @@ export class CreateComponent extends BaseComponent {
     create_product.description = description.value;
     this.productService.create(create_product, () => {
       this.hideSpinner();
-      this.alertify.alert("Ürün başarıyla eklenmiştir.", AlertType.Success);
+      this.alertifyService.alert("Ürün başarıyla eklenmiştir.", AlertType.Success);
+      this.createdProduct.emit(create_product);
     },
       (message: string) => {
         this.hideSpinner();
@@ -38,6 +37,9 @@ export class CreateComponent extends BaseComponent {
   }
 
   errorCallBack(message: string) {
-    this.alertify.alert(message, AlertType.Error);
+    this.alertifyService.alert(message, AlertType.Error);
   }
+
+  @Output() createdProduct = new EventEmitter<Create_Product>();
+
 }

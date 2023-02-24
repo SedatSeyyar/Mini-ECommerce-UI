@@ -16,12 +16,14 @@ export class HttpClientService {
     let controller: string = requestParameter.controller;
     let action: string = `${requestParameter.action ? `/${requestParameter.action}` : ''}`;
     let fullUrl: string = `${url}/${controller}${action}`;
+    if (requestParameter.queryString)
+      fullUrl += `?${requestParameter.queryString}`;
     return fullUrl;
   }
 
   // Partial --> Fonksiyonun çağrımı sırasında nesnenin önceden oluşturulmasını zorunlu kılmaz. { controller="test";} şeklinde bir input oluşturularak kullanılabilir.
   get<T>(requestParameter: Partial<RequestParameters>, id?: string): Observable<T> {
-    let url = `${this.generateUrl(requestParameter)}${id ? `/${id}` : ''}`
+    let url = `${this.generateUrl(requestParameter)}${id ? `/${id}` : ''}`;
     return this.httpClient.get<T>(url, { headers: requestParameter.headers });
   }
 
@@ -36,7 +38,7 @@ export class HttpClientService {
   }
 
   delete<T>(requestParameter: Partial<RequestParameters>, id?: string): Observable<T> {
-    let url = `${this.generateUrl(requestParameter)}${id ? `/${id}` : ''}`
+    let url = `${this.generateUrl(requestParameter)}${id ? `/${id}` : ''}`;
     return this.httpClient.delete<T>(url, { headers: requestParameter.headers });
   }
 }
@@ -44,6 +46,8 @@ export class HttpClientService {
 export class RequestParameters {
   controller?: string;
   action?: string;
+  queryString?: string;
+
   headers?: HttpHeaders;
   baseUrl?: string;
   fullEndpoint?: string;
