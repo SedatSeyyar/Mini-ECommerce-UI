@@ -11,7 +11,7 @@ export class OrdersComponent extends BaseComponent {
 
   constructor(spinner: NgxSpinnerService) {
     super(spinner);
-    this.spinnerType = SpinnerType.CorsSpinner;
+    this.spinnerType = SpinnerType.CrudSpinner;
   }
 
   ngOnInit() {

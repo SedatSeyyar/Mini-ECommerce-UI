@@ -16,7 +16,7 @@ export class ListComponent extends BaseComponent {
 
   constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertifyService: AlertifyService) { super(spinner); }
 
-  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Stock', 'CreatedTime', 'UpdatedTime'];
+  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Stock', 'CreatedTime', 'UpdatedTime', 'Delete'];
   dataSource: MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -26,7 +26,7 @@ export class ListComponent extends BaseComponent {
 
   async getProducts() {
     this.showSpinner();
-    const allProducts: {totalCount: number, products : List_Product[]} = await this.productService.read( this.paginator?.pageIndex ?? 0,
+    const allProducts: { totalCount: number, products: List_Product[] } = await this.productService.read(this.paginator?.pageIndex ?? 0,
       this.paginator ? this.paginator.pageSize : 5,
       () => {
         this.hideSpinner();
@@ -39,8 +39,13 @@ export class ListComponent extends BaseComponent {
     this.paginator.length = allProducts.totalCount;
   }
 
-  async pageChanged(){
+  async pageChanged() {
     await this.getProducts();
+  }
+
+  delete(id: number, event: any) {
+    const element: HTMLElement = event.srcElement;
+    element.parentElement.parentElement.parentElement.remove();
   }
 }
 

@@ -34,6 +34,6 @@ export class BaseComponent {
 }
 
 export enum SpinnerType {
-  CorsSpinner = "spinnerCors",
+  CrudSpinner = "spinnerCrud",
   LoadingSpinner = "spinnerLoading"
 } 
