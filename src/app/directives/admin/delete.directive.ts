@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -43,6 +44,9 @@ export class DeleteDirective {
           this.element.nativeElement.parentElement.parentElement.remove();
           this.refreshTable.emit();
           this.alertifyService.alert("The item has been successfully deleted.", AlertType.Success);
+        }, (errorResponse: HttpErrorResponse) => {
+          this.spinnerService.hide(SpinnerType.CrudSpinner);
+          this.alertifyService.alert("The item has <b>not</b> been successfully deleted.", AlertType.Error);
         });
     });
   }
