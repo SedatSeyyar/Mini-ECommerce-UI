@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DeleteDialogComponent, DeleteState } from 'src/app/admin/components/dialogs/delete/delete-dialog/delete-dialog.component';
 import { SpinnerType } from 'src/app/base/base.component';
-import { AlertifyService } from 'src/app/services/admin/alertify.service';
+import { AlertifyService, AlertType } from 'src/app/services/admin/alertify.service';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 
 @Directive({
@@ -42,7 +42,7 @@ export class DeleteDirective {
           this.spinnerService.hide(SpinnerType.CrudSpinner);
           this.element.nativeElement.parentElement.parentElement.remove();
           this.refreshTable.emit();
-          this.alertifyService.alert("The item has been successfully deleted.");
+          this.alertifyService.alert("The item has been successfully deleted.", AlertType.Success);
         });
     });
   }
