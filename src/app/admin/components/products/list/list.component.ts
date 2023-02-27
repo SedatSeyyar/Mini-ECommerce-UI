@@ -16,7 +16,7 @@ export class ListComponent extends BaseComponent {
 
   constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertifyService: AlertifyService) { super(spinner); }
 
-  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Stock', 'CreatedTime', 'UpdatedTime', 'Delete'];
+  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Stock', 'CreatedTime', 'UpdatedTime', 'Process'];
   dataSource: MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
