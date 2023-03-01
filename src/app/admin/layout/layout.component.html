@@ -1,6 +1,12 @@
-<app-header></app-header>
-<mat-drawer-container class="admin-container">
-    <mat-drawer mode="side" opened><app-sidebar></app-sidebar></mat-drawer>
-    <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
-</mat-drawer-container>
-<app-footer></app-footer>
+<!-- <app-header></app-header> -->
+<div class="row">
+    <nav class="navbar-dark bg-dark col-md-2" style="height: 100vh;">
+        <app-sidebar></app-sidebar>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
+<!-- <app-footer></app-footer> -->

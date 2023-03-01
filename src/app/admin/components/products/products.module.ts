@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog/delete-dialog.component';
+import { InsertDialogComponent } from '../dialogs/insert/insert-dialog/insert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog/delete-di
     CreateComponent,
     ListComponent,
     DeleteDirective,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    InsertDialogComponent
   ],
   imports: [
     CommonModule,

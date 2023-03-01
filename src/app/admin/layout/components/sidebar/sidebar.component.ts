@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  navClicked(event: any) {
+    var activeElements = document.querySelectorAll('.active');
+    activeElements.forEach(el => el.classList.remove('active'));
+    const element: HTMLElement = event.srcElement;
+    element.classList.add("active");
+  }
+
 }

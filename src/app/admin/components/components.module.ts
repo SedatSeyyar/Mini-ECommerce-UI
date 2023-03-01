@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     
+  
+    
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     OrdersModule,
     CustomersModule,
     DashboardModule,
-    MatDialogModule
+    MatDialogModule,
   ]
 })
 export class ComponentsModule { }

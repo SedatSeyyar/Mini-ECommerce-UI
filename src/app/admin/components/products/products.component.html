@@ -1,8 +1,24 @@
-<mat-drawer-container class="product-container">
-    <mat-drawer class="container-sidenav" mode="side" opened>
+<div class="container">
+    <div class="container text-end mb-1 mt-1">
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="newProduct()">
+            <i class="bi bi-cloud-plus"></i>
+            New Product
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-sm btn-outline-success">
+            <i class="bi bi-cloud-download"></i>
+            Export To Excel
+        </button>
+    </div>
+    <div class="container">
+        <app-list></app-list>
+    </div>
+</div>
+
+<!-- <mat-drawer-container class="product-container">
+     <mat-drawer class="container-sidenav" mode="side" opened>
         <app-create (createdProduct)="createdProductEventHandler($event)"></app-create>
     </mat-drawer>
     <mat-drawer-content class="container-content">
-        <app-list></app-list>
     </mat-drawer-content>
-</mat-drawer-container>
+</mat-drawer-container> -->

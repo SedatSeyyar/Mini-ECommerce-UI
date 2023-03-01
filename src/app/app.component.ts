@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { CustomToastrService, ToastrAlertType } from './services/ui/custom-toastr.service';
 declare var $: any;
 
@@ -8,12 +9,24 @@ declare var $: any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private toaster: CustomToastrService) {
+  headerDisplay: string = "block";
+  constructor(private toaster: CustomToastrService,
+    router: Router) {
+    router.events.forEach((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.indexOf("admin") > 0)
+          this.headerDisplay = "none";
+        else 
+          this.headerDisplay = "block";
+      }
+    })
+
   }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // this.toaster.alert("Test", "Deneme", ToastrAlertType.Warning);
   }
+
   title = 'ETicaretClient';
 }

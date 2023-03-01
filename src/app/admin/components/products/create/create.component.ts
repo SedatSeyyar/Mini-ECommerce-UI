@@ -18,7 +18,7 @@ export class CreateComponent extends BaseComponent {
 
   }
 
-  create(name: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement, description: HTMLTextAreaElement) {
+  create(name: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement, description: HTMLInputElement) {
     this.showSpinner();
     const create_product: Create_Product = new Create_Product();
     create_product.name = name.value;
@@ -28,7 +28,7 @@ export class CreateComponent extends BaseComponent {
     this.productService.create(create_product, () => {
       this.hideSpinner();
       this.alertifyService.alert("Ürün başarıyla eklenmiştir.", AlertType.Success);
-      this.createdProduct.emit(create_product);
+      // this.createdProduct.emit(create_product);
     },
       (message: string) => {
         this.hideSpinner();
@@ -40,6 +40,6 @@ export class CreateComponent extends BaseComponent {
     this.alertifyService.alert(message, AlertType.Error);
   }
 
-  @Output() createdProduct = new EventEmitter<Create_Product>();
+  // @Output() createdProduct = new EventEmitter<Create_Product>();
 
 }
