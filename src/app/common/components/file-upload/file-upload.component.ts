@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+// import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { AlertifyService, AlertType } from 'src/app/services/admin/alertify.service';
+import { HttpClientService } from 'src/app/services/common/http-client.service';
+import { CustomToastrService, ToastrAlertType } from 'src/app/services/ui/custom-toastr.service';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-file-upload',
@@ -7,51 +12,84 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-  public files: NgxFileDropEntry[] = [];
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
+  constructor(private httpClientService: HttpClientService,
+    private alertifyService: AlertifyService,
+    private toastrService: CustomToastrService,
+    private httpClient: HttpClient) {
 
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
+  }
 
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
+  @Input()
+  options: Partial<FileUploadOptions>;
 
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
+  files: File[] = [];
 
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
+  onSelect(event) {
+    this.files.push(...event.addedFiles);
 
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
+    const formData = new FormData();
 
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
+    for (var i = 0; i < this.files.length; i++) {
+      formData.append("file[]", this.files[i]);
     }
+
+    this.httpClientService.post({
+      controller: this.options.controller,
+      action: this.options.action,
+      queryString: this.options.queryString,
+      headers: new HttpHeaders({ "responseType": "blob" })
+    }, formData).subscribe(data => {
+      const message: string = "Dosya yükleme işlemi başarılı";
+      if (this.options.isAdminPage) {
+        this.alertifyService.alert(message, AlertType.Success);
+      } else {
+        this.toastrService.alert("İşlem Sonucu", message, ToastrAlertType.Success);
+      }
+    }, (errorResponse: HttpErrorResponse) => {
+      const message: string = "Dosya yükleme işlemi başarısız";
+      if (this.options.isAdminPage) {
+        this.alertifyService.alert(message, AlertType.Error);
+      } else {
+        this.toastrService.alert("İşlem Sonucu", message, ToastrAlertType.Error);
+      }
+    });
   }
 
-  public fileOver(event) {
-    console.log(event);
+  onRemove(event) {
+    this.files.splice(this.files.indexOf(event), 1);
   }
 
-  public fileLeave(event) {
-    console.log(event);
+  private async readFile(file: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+
+      reader.readAsDataURL(file);
+    });
   }
 }
+
+export class FileUploadOptions {
+  controller?: string;
+  action?: string;
+  queryString?: string;
+  explanation?: string;
+  accept?: string;
+  isAdminPage?: boolean;
+}
+
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileUploadComponent } from './file-upload.component';
-import { NgxFileDropModule } from 'ngx-file-drop';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 
 
@@ -11,7 +12,10 @@ import { NgxFileDropModule } from 'ngx-file-drop';
   ],
   imports: [
     CommonModule,
-    NgxFileDropModule
+    NgxDropzoneModule
+  ],
+  exports:[
+    FileUploadComponent
   ]
 })
 export class FileUploadModule { }
